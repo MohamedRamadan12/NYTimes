@@ -16,6 +16,16 @@ class MainArticlesCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    func configureUi(articleList: ArticlesList) {
+        let article = articleList.abstract
+        let nsString = article as NSString
+        if nsString.length >= 10
+        {
+            articleLable.text = "\(nsString.substring(with: NSRange(location: 0, length: nsString.length > 70 ? 70 : nsString.length)))   ... click to continue"
+        }
+        titleLable.text = articleList.title
+    }
 
  
 }
