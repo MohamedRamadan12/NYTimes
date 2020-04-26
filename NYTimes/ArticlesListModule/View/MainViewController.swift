@@ -14,23 +14,24 @@ class MainViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableview: UITableView!
     
+    @IBOutlet weak var spinnerIndicator: UIActivityIndicatorView!
     
     var viewModel = ArticleViewModel()
     var articlesList: [ArticlesList] = []
+    let refresherControl = UIRefreshControl()
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.spinnerIndicator.stopAnimating()
         tableview.dataSource = self
         tableview.delegate = self
+        callData()
+        refreshTable()
         tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
-
-        viewModel.getArticlesList(numOfDays: .one, completion: { list in
-            self.articlesList = list
-            self.tableview.reloadData()
-        })
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,27 +39,46 @@ class MainViewController: UIViewController {
         tableview.reloadData()
     }
     
+    @objc func callData() {
+        viewModel.getArticlesList(numOfDays: .one, completion: { list in
+            self.articlesList = list
+            self.tableview.reloadData()
+            self.refresherControl.endRefreshing()
+            self.spinnerIndicator.stopAnimating()
+        })
+    }
+    
+    func refreshTable() {
+        tableview.refreshControl = refresherControl
+               refresherControl.tintColor = #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1)
+        refresherControl.attributedTitle = NSAttributedString(string: "Refreshing News", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1), NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!])
+               refresherControl.addTarget(self, action: #selector(callData), for: .valueChanged)
+    }
+    
     @IBAction func filterSegmentedControl(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0 :
+            self.spinnerIndicator.startAnimating()
             viewModel.getArticlesList(numOfDays: .one, completion: { list in
                 self.articlesList = list
                 self.tableview.reloadData()
-                
+                self.spinnerIndicator.stopAnimating()
             })
             return
         case 1:
+            self.spinnerIndicator.startAnimating()
             viewModel.getArticlesList(numOfDays: .seven, completion: { list in
                 self.articlesList = list
                 self.tableview.reloadData()
-                
+                self.spinnerIndicator.stopAnimating()
             })
             return
         case 2 :
+            self.spinnerIndicator.startAnimating()
             viewModel.getArticlesList(numOfDays: .thirty, completion: { list in
                 self.articlesList = list
                 self.tableview.reloadData()
-                
+                self.spinnerIndicator.stopAnimating()
             })
             return
         default:
@@ -83,13 +103,14 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = self.tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell") as! MainArticlesCell
         cell.configureUi(articleList: articlesList[indexPath.row])
+        cell.selectionStyle = .none
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let articleDetails = articlesList[indexPath.row]
         let detailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
         detailController.articleDetails = articleDetails
-        self.navigationController?.pushViewController(detailController, animated: true)
+        self.navigationController?.present(detailController, animated: true)//pushViewController(detailController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
