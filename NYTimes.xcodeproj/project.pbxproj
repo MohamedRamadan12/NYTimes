@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -116,12 +116,11 @@
 		4B982BD42455842B004CC267 /* NYTimes */ = {
 			isa = PBXGroup;
 			children = (
+				4B982C05245590B6004CC267 /* SupportingFiles */,
 				4B982BD52455842B004CC267 /* AppDelegate.swift */,
 				4B982BD72455842B004CC267 /* SceneDelegate.swift */,
 				4B982BD92455842B004CC267 /* ViewController.swift */,
 				4B982BDB2455842B004CC267 /* Main.storyboard */,
-				4B982BDE24558430004CC267 /* Assets.xcassets */,
-				4B982BE024558430004CC267 /* LaunchScreen.storyboard */,
 				4B982BE324558430004CC267 /* Info.plist */,
 			);
 			path = NYTimes;
@@ -145,6 +144,15 @@
 			path = NYTimesUITests;
 			sourceTree = "<group>";
 		};
+		4B982C05245590B6004CC267 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4B982BDE24558430004CC267 /* Assets.xcassets */,
+				4B982BE024558430004CC267 /* LaunchScreen.storyboard */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		96F15870DDF375EA92507F1F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,7 +163,6 @@
 				63396A13C511316925865192 /* Pods-NYTimesTests.debug.xcconfig */,
 				151E28D426A8A9A65938432E /* Pods-NYTimesTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
