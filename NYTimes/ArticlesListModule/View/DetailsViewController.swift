@@ -25,6 +25,10 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.x = 0
     }
+    func setupUI(articleDetails: ArticlesList){
+        self.detailsLabel.text = articleDetails.adxKeywords
+        self.titleLabel.text = articleDetails.title
+    }
   
 
 }

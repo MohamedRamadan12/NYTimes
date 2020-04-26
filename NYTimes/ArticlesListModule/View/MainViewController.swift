@@ -25,19 +25,31 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         tableview.dataSource = self
         tableview.delegate = self
+        
         viewModel.getArticlesList(numOfDays: .one, completion: { list in
             self.articlesList = list
         })
+        tableview.reloadData()
     }
     
-    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return 5
+        return articlesList.count
      }
      
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainArticlesCell", for: indexPath) as! MainArticlesCell
+        cell.configureUi(articleList: articlesList[indexPath.row])
+        return cell
      }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let articleDetails = articlesList[indexPath.row]
+        let detailController = UIStoryboard(name: "DetailsViewController", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        detailController.setupUI(articleDetails: articleDetails)
+       self.navigationController?.pushViewController(detailController, animated: true)
+    }
      
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
          if self.tableview.isDragging{
@@ -48,18 +60,25 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
          }
      }
     
-    
-    
-    
-    
-
     @IBAction func filterSegmentedControl(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0 :
+            viewModel.getArticlesList(numOfDays: .one, completion: { list in
+                       self.articlesList = list
+                   })
+            tableview.reloadData()
             return
         case 1:
+            viewModel.getArticlesList(numOfDays: .seven, completion: { list in
+                                  self.articlesList = list
+                              })
+            tableview.reloadData()
             return
         case 2 :
+            viewModel.getArticlesList(numOfDays: .thirty, completion: { list in
+                                  self.articlesList = list
+                              })
+            tableview.reloadData()
             return
         default:
             break
