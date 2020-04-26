@@ -24,7 +24,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         tableview.dataSource = self
         tableview.delegate = self
-        
+        tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
+
         viewModel.getArticlesList(numOfDays: .one, completion: { list in
             self.articlesList = list
             self.tableview.reloadData()
@@ -80,7 +81,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : MainArticlesCell = self.tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell") as! MainArticlesCell
+        let cell  = self.tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell") as! MainArticlesCell
         cell.configureUi(articleList: articlesList[indexPath.row])
         return cell
     }
