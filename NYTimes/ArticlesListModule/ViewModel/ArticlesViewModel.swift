@@ -11,7 +11,7 @@ import Foundation
 class ArticleViewModel{
     
     func getArticlesList(numOfDays: Days, completion: @escaping (_ list: [ArticlesList]) -> Void){
-        let endPoint = EndPoints.getArticlesList(numOfDays: .one)
+        let endPoint = EndPoints.getArticlesList(numOfDays: numOfDays)
         ApiClient.CallApi(endPoint: endPoint) { (result: Articles?, error: Error?, code) in
             print(result)
             guard let resultList = result?.results else { return }
