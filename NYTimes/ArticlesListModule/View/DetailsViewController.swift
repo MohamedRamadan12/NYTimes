@@ -15,11 +15,14 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var detailsLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var articleDetails: ArticlesList?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
 
+        setupUI(articleDetails: articleDetails!)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

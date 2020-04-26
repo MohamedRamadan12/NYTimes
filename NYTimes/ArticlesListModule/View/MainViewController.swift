@@ -87,8 +87,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let articleDetails = articlesList[indexPath.row]
-        let detailController = UIStoryboard(name: "DetailsViewController", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
-        detailController.setupUI(articleDetails: articleDetails)
+        let detailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        detailController.articleDetails = articleDetails
         self.navigationController?.pushViewController(detailController, animated: true)
     }
     
