@@ -8,10 +8,9 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
-{
- 
-
+class MainViewController: UIViewController {
+    
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableview: UITableView!
     
@@ -28,57 +27,38 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         viewModel.getArticlesList(numOfDays: .one, completion: { list in
             self.articlesList = list
+            self.tableview.reloadData()
         })
-        tableview.reloadData()
+        
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableview.reloadData()
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articlesList.count
-     }
-     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MainArticlesCell", for: indexPath) as! MainArticlesCell
-        cell.configureUi(articleList: articlesList[indexPath.row])
-        return cell
-     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let articleDetails = articlesList[indexPath.row]
-        let detailController = UIStoryboard(name: "DetailsViewController", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
-        detailController.setupUI(articleDetails: articleDetails)
-       self.navigationController?.pushViewController(detailController, animated: true)
-    }
-     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-         if self.tableview.isDragging{
-             cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
-             UIView.animate(withDuration: 0.3, animations: {
-                 cell.transform = CGAffineTransform.identity
-             })
-         }
-     }
     
     @IBAction func filterSegmentedControl(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0 :
             viewModel.getArticlesList(numOfDays: .one, completion: { list in
-                       self.articlesList = list
-                   })
-            tableview.reloadData()
+                self.articlesList = list
+                self.tableview.reloadData()
+                
+            })
             return
         case 1:
             viewModel.getArticlesList(numOfDays: .seven, completion: { list in
-                                  self.articlesList = list
-                              })
-            tableview.reloadData()
+                self.articlesList = list
+                self.tableview.reloadData()
+                
+            })
             return
         case 2 :
             viewModel.getArticlesList(numOfDays: .thirty, completion: { list in
-                                  self.articlesList = list
-                              })
-            tableview.reloadData()
+                self.articlesList = list
+                self.tableview.reloadData()
+                
+            })
             return
         default:
             break
@@ -89,3 +69,35 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
 }
 
+extension MainViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return articlesList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell : MainArticlesCell = self.tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell") as! MainArticlesCell
+        cell.configureUi(articleList: articlesList[indexPath.row])
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let articleDetails = articlesList[indexPath.row]
+        let detailController = UIStoryboard(name: "DetailsViewController", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        detailController.setupUI(articleDetails: articleDetails)
+        self.navigationController?.pushViewController(detailController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if self.tableview.isDragging{
+            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.transform = CGAffineTransform.identity
+            })
+        }
+    }
+
+}
