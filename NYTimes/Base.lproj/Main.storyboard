@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="org-aU-pE4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cGI-9E-MRU">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -7,6 +7,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="rod-cf-NZC">
+            <objects>
+                <navigationController id="cGI-9E-MRU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vGD-bW-83f">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="xM3-D0-eoJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B2F-Jg-g6Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2047" y="129"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -15,53 +31,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JhM-zJ-LGu">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="121.66666666666667"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="737-ft-xtV">
-                                        <rect key="frame" x="135" y="55.666666666666657" width="105" height="54"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEq-hS-cjQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="105" height="20.333333333333332"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="lText" value="welcome"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NY Times" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8U8-IM-6fF">
-                                                <rect key="frame" x="0.0" y="25.333333333333336" width="105" height="28.666666666666664"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="lText" value="socialApp"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.29803921570000003" green="0.59215686270000001" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="737-ft-xtV" firstAttribute="centerX" secondItem="JhM-zJ-LGu" secondAttribute="centerX" id="Vf2-ZG-YNB"/>
-                                    <constraint firstAttribute="bottom" secondItem="737-ft-xtV" secondAttribute="bottom" constant="12" id="b6s-D9-Nuh"/>
-                                </constraints>
-                            </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ohS-BD-s6b">
-                                <rect key="frame" x="84.666666666666686" y="141.66666666666666" width="206" height="32"/>
-                                <segments>
-                                    <segment title="1 day"/>
-                                    <segment title="7 days"/>
-                                    <segment title="30 days"/>
-                                </segments>
-                                <color key="selectedSegmentTintColor" red="0.29803921570000003" green="0.59215686270000001" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="filterSegmentedControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="B6i-gE-m8B"/>
-                                </connections>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ppz-og-agQ">
-                                <rect key="frame" x="0.0" y="192.66666666666669" width="375" height="599.33333333333326"/>
+                                <rect key="frame" x="0.0" y="115" width="375" height="677"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="nd6-gL-De6"/>
@@ -79,19 +50,27 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </activityIndicatorView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ohS-BD-s6b">
+                                <rect key="frame" x="84.666666666666686" y="64" width="206" height="32"/>
+                                <segments>
+                                    <segment title="1 day"/>
+                                    <segment title="7 days"/>
+                                    <segment title="30 days"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" red="0.29803921570000003" green="0.59215686270000001" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="filterSegmentedControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="B6i-gE-m8B"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ppz-og-agQ" secondAttribute="bottom" constant="20" symbolic="YES" id="3P2-5Q-nrI"/>
                             <constraint firstItem="ppz-og-agQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="5dc-Ru-vfK"/>
-                            <constraint firstItem="JhM-zJ-LGu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Dtm-JB-7l7"/>
-                            <constraint firstItem="JhM-zJ-LGu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="E9O-ed-0eW"/>
+                            <constraint firstItem="ppz-og-agQ" firstAttribute="top" secondItem="ohS-BD-s6b" secondAttribute="bottom" constant="20" id="6qf-jz-gg8"/>
                             <constraint firstItem="ohS-BD-s6b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HdE-zo-DzJ"/>
-                            <constraint firstItem="ppz-og-agQ" firstAttribute="top" secondItem="ohS-BD-s6b" secondAttribute="bottom" constant="20" id="Mhp-3l-Nc6"/>
-                            <constraint firstItem="JhM-zJ-LGu" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="Xj9-ey-oah"/>
+                            <constraint firstItem="ohS-BD-s6b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="adZ-aL-PNd"/>
                             <constraint firstItem="ppz-og-agQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dzW-o5-o79"/>
-                            <constraint firstAttribute="trailing" secondItem="JhM-zJ-LGu" secondAttribute="trailing" id="e7E-Ty-j9K"/>
-                            <constraint firstItem="ohS-BD-s6b" firstAttribute="top" secondItem="JhM-zJ-LGu" secondAttribute="bottom" constant="20" id="pS4-L3-pOi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -101,11 +80,12 @@
                         <outlet property="segmentedControl" destination="ohS-BD-s6b" id="Sos-UX-cPB"/>
                         <outlet property="spinnerIndicator" destination="xeg-9U-rbB" id="q8s-fR-vQG"/>
                         <outlet property="tableview" destination="ppz-og-agQ" id="2hQ-uy-YEh"/>
+                        <segue destination="Gud-HQ-UFg" kind="show" id="0Xr-2j-t0s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1074.4000000000001" y="128.57142857142858"/>
+            <point key="canvasLocation" x="2959.1999999999998" y="128.57142857142858"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="ead-36-eeO">
@@ -117,7 +97,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYs-7H-Vt2">
                                 <rect key="frame" x="20" y="141.66666666666666" width="335" height="331.33333333333337"/>
-                                <mutableString key="text">But here’s the fun part: the ViewModel doesn’t know anything about the ViewController. It never references or sets properties inside it directly. Instead, the ViewController is constantly observing the ViewModel for any changes, and as soon something changes, it displays it. Keep in mind, this is on a per-property basis. This means that the ViewController is displaying each property inside the ViewModel individually, i.e. if you want to load a string and an image, you can present them as they are loaded, you don’t have to wait until they’re both loaded to present them both at once.</mutableString>
+                                <string key="text">But here’s the fun part: the ViewModel doesn’t know anything about the ViewController. It never references or sets properties inside it directly. Instead, the ViewController is constantly observing the ViewModel for any changes, and as soon something changes, it displays it. Keep in mind, this is on a per-property basis. This means that the ViewController is displaying each property inside the ViewModel individually, i.e. if you want to load a string and an image, you can present them as they are loaded, you don’t have to wait until they’re both loaded to present them both at once.</string>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -155,6 +135,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xga-si-FFM"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Ax4-7L-DEV"/>
                     <connections>
                         <outlet property="detailsLabel" destination="eYs-7H-Vt2" id="b6Q-2F-LpX"/>
                         <outlet property="titleLabel" destination="gr5-jU-ogJ" id="VB2-Bu-2un"/>
@@ -162,25 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FAj-U1-FBZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1922.4000000000001" y="128.57142857142858"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="w3O-uv-edI">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="org-aU-pE4" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3II-Fh-EWa">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="MtN-UA-VSd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="edK-dW-m8H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="132" y="128.57142857142858"/>
+            <point key="canvasLocation" x="3807.1999999999998" y="128.57142857142858"/>
         </scene>
     </scenes>
 </document>

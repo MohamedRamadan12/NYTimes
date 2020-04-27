@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-class ApiClient {
+class GenericClientApi {
     typealias HandleResponse<T: Decodable> = (_ results: T?, _ error: Error?, _ code: Int ) -> Void
 
     @discardableResult
