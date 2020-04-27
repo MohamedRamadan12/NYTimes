@@ -9,4 +9,8 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-BaseUrl = "https://api.nytimes.com/svc/mostpopular/v2/viewed/"
+BaseUrl=api.nytimes.com/svc/mostpopular/v2/viewed/
+
+
+#include "Pods/Target Support Files/Pods-NYTimes/Pods-NYTimes.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-NYTimes/Pods-NYTimes.release.xcconfig"

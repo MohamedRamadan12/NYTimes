@@ -19,21 +19,21 @@ enum EndPoints: APIConfigurations {
     }
     
     internal var encoding: ParameterEncoding {
-           switch method {
-           case .get:
-               return URLEncoding.default
-           case .post:
-             return  JSONEncoding.default
-           default:
-              return JSONEncoding.default
-       }
-       }
+        switch method {
+            case .get:
+                return URLEncoding.default
+            case .post:
+                return  JSONEncoding.default
+            default:
+                return JSONEncoding.default
+        }
+    }
     
     var path: String {
         switch self {
-        case .getArticlesList(let numOfdays):
-            return "\(numOfdays.day)\(Constants.apiKey)"
-   
+            case .getArticlesList(let numOfdays):
+                return "\(numOfdays.day)\(Constants.apiKey)"
+
         }
         
     }
@@ -43,7 +43,7 @@ enum EndPoints: APIConfigurations {
     }
     
     func asURLRequest() throws -> URLRequest {
-        let url = getValue(forKey: "BaseUrl") + path
+        let url = "https://\(getValue(forKey: "BaseUrl"))\(path)"
         
         let finalURl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let urlRequest = URLRequest(url: URL(string: finalURl)!)
@@ -52,7 +52,7 @@ enum EndPoints: APIConfigurations {
     }
     
     func getValue(forKey key: String) -> String {
-           return (Bundle.main.infoDictionary?[key] as? String)!
-       }
+        return (Bundle.main.infoDictionary?[key] as? String)!
+    }
     
 }

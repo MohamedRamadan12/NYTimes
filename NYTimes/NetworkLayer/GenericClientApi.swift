@@ -17,17 +17,17 @@ class GenericClientApi {
         
         return AF.request(route).responseJSON(completionHandler: { (response) in
             switch response.result {
-            case .success(let value):
-                print(value)
-                do {
-                    let DataResponsed = try JSONDecoder().decode(T.self, from: response.data!)
-                    completion(DataResponsed, nil, response.response?.statusCode)
-                } catch {
-                    completion(nil, error,response.response?.statusCode)
+                case .success(let value):
+                    print(value)
+                    do {
+                        let DataResponsed = try JSONDecoder().decode(T.self, from: response.data!)
+                        completion(DataResponsed, nil, response.response?.statusCode)
+                    } catch {
+                        completion(nil, error,response.response?.statusCode)
                 }
-            case .failure(let error):
-                print(error)
-                completion(nil, error, response.response?.statusCode)
+                case .failure(let error):
+                    print(error)
+                    completion(nil, error, response.response?.statusCode)
             }
         }
         ) }
@@ -36,7 +36,7 @@ class GenericClientApi {
         performRequest(route: endPoint) { (results, error,code) in
             completion(results, error,code ?? 1001 )
         }
-        }
+    }
 }
 
 
