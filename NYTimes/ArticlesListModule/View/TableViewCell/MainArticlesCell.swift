@@ -22,6 +22,10 @@ class MainArticlesCell: UITableViewCell {
         let nsString = article as NSString
         if nsString.length >= 10
         {
+            // When you use things that are is not self explanatory,
+
+            // extract as a variable, and give a descriptive name
+            // Or write a comment describing what is happening
             articleLable.text = "\(nsString.substring(with: NSRange(location: 0, length: nsString.length > 20 ? 20 : nsString.length)))   ... click to continue"
         }
         titleLable.text = articleList.title

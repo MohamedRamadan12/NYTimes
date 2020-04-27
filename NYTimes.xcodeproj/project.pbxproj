@@ -80,6 +80,7 @@
 		711000A797C154E56A112E22 /* Pods_NYTimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NYTimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D6C305028B0C8ED4684A60 /* Pods_NYTimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NYTimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46F1B76237C4FACFDFA77DA /* Pods_NYTimes_NYTimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NYTimes_NYTimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C75DB6102456BC7D002DD70F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2F597E35CB781F648F02000 /* Pods-NYTimes-NYTimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NYTimes-NYTimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-NYTimes-NYTimesUITests/Pods-NYTimes-NYTimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +115,7 @@
 		4B982BC92455842B004CC267 = {
 			isa = PBXGroup;
 			children = (
+				C75DB6102456BC7D002DD70F /* README.md */,
 				4B982BD42455842B004CC267 /* NYTimes */,
 				4B982BEB24558430004CC267 /* NYTimesTests */,
 				4B982BF624558430004CC267 /* NYTimesUITests */,
@@ -327,6 +329,7 @@
 				TargetAttributes = {
 					4B982BD12455842B004CC267 = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1140;
 					};
 					4B982BE724558430004CC267 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -687,7 +690,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Mohamed-Ramadan.NYTimes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -705,7 +708,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Mohamed-Ramadan.NYTimes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
