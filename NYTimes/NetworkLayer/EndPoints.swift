@@ -43,12 +43,16 @@ enum EndPoints: APIConfigurations {
     }
     
     func asURLRequest() throws -> URLRequest {
-        let url = Constants.baseUrl + path
+        let url = getValue(forKey: "BaseUrl") + path
         
         let finalURl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let urlRequest = URLRequest(url: URL(string: finalURl)!)
 
         return urlRequest
     }
+    
+    func getValue(forKey key: String) -> String {
+           return (Bundle.main.infoDictionary?[key] as? String)!
+       }
     
 }

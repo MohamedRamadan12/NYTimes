@@ -54,6 +54,7 @@
 		4766F55A2455E7FC00004FCD /* extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		4766F55C2455E91A00004FCD /* MainArticlesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainArticlesCell.swift; sourceTree = "<group>"; };
 		4766F55E245603A800004FCD /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		4B5451762457016E00451117 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4B982BD22455842B004CC267 /* NYTimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NYTimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B982BD52455842B004CC267 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B982BD72455842B004CC267 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 				4B982BD52455842B004CC267 /* AppDelegate.swift */,
 				4B982BDB2455842B004CC267 /* Main.storyboard */,
 				4B982BE324558430004CC267 /* Info.plist */,
+				4B5451762457016E00451117 /* Config.xcconfig */,
 			);
 			path = NYTimes;
 			sourceTree = "<group>";
