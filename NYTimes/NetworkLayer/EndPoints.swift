@@ -32,7 +32,7 @@ enum EndPoints: APIConfigurations {
     var path: String {
         switch self {
             case .getArticlesList(let numOfdays):
-                return "\(numOfdays.day)\(Constants.apiKey)"
+                return "\(numOfdays.day)\(getValue(forKey: "ApiKey"))"
 
         }
         
