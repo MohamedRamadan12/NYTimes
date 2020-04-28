@@ -25,8 +25,5 @@ class ArticleViewModel {
                 self?.articles.accept(results)
             }
         }
-
-        fetchArticles.onNext()
-
     }
 }

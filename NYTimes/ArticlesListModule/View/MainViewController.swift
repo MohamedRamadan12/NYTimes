@@ -74,6 +74,12 @@ class MainViewController: UIViewController {
         tableview.estimatedRowHeight = 120
         tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
     }
+    
+    @objc func callData(){
+        viewModel.fetchArticles.subscribe(onNext:{
+            print("Fetching---")
+            }).dispose()
+    }
 }
 //     fileprivate func ActionSegmentPressed(numOfDays: Days) {
 //        self.spinnerIndicator.startAnimating()
