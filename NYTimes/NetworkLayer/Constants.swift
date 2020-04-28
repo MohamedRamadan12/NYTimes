@@ -8,11 +8,6 @@
 
 import Foundation
 
-struct Constants {
-    
-    static let baseUrl = "https://api.nytimes.com/svc/mostpopular/v2/viewed/"
-    static let apiKey = ".json?api-key=XxCxgOxWhL6WVwdaJ5zNSYpYunISHuOB"
-}
 
 enum Days: Int {
     case one = 1

@@ -18,25 +18,27 @@ class MainViewController: UIViewController {
     @IBOutlet weak var spinnerIndicator: UIActivityIndicatorView!
     
     let disposeBag = DisposeBag()
-    var articleViewModel: ArticleViewModel!
+    var viewModel: ArticleViewModel!
+
     let refresherControl = UIRefreshControl()
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "NY Times"
         self.navigationController?.isNavigationBarHidden = false
         super.viewWillAppear(true)
-           self.navigationController?.navigationBar.prefersLargeTitles = true
-           if #available(iOS 13.0, *) {
-               let navBarAppearance = UINavigationBarAppearance()
-               navBarAppearance.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.5921568627, blue: 0.9568627451, alpha: 1)
-               self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-           }
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.5921568627, blue: 0.9568627451, alpha: 1)
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = ArticleViewModel()
         self.spinnerIndicator.startAnimating()
-        callData()
+        self.bindViewModel()
         refreshTable()
         tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
     }
@@ -46,13 +48,14 @@ class MainViewController: UIViewController {
         tableview.reloadData()
     }
     
-    @objc func callData() {
-        articleViewModel = ArticleViewModel(numOfDays: segmentedControl.rx.selectedSegmentIndex
-            .map {Days(index: $0) ?? .one}
-            .asDriver(onErrorJustReturn: .one))
-        articleViewModel.articales.drive(onNext: { [weak self](_) in
-            self?.tableview.reloadData()
-            }).disposed(by: disposeBag)
+    func bindViewModel() {
+        //        segmentedControl.rx.selectedSegmentIndex
+        //        articleViewModel = ArticleViewModel(numOfDays:
+        //            .map {Days(index: $0) ?? .one}
+        //            .asDriver(onErrorJustReturn: .one))
+        //        articleViewModel.articales.drive(onNext: { [weak self](_) in
+        //            self?.tableview.reloadData()
+        //            }).disposed(by: disposeBag)
         self.refresherControl.endRefreshing()
         self.spinnerIndicator.stopAnimating()
         setupTableView()
@@ -60,16 +63,17 @@ class MainViewController: UIViewController {
     
     func refreshTable() {
         tableview.refreshControl = refresherControl
-               refresherControl.tintColor = #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1)
+        refresherControl.tintColor = #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1)
         refresherControl.attributedTitle = NSAttributedString(string: "Refreshing News", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1), NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!])
-               refresherControl.addTarget(self, action: #selector(callData), for: .valueChanged)
+        refresherControl.rx.controlEvent(.valueChanged).bind(to: viewModel.fetchArticles)
+        refresherControl.addTarget(self, action: #selector(callData), for: .valueChanged)
     }
     
     private func setupTableView() {
-           tableview.rowHeight = UITableView.automaticDimension
-           tableview.estimatedRowHeight = 120
-           tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
-       }
+        tableview.rowHeight = UITableView.automaticDimension
+        tableview.estimatedRowHeight = 120
+        tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
+    }
 }
 //     fileprivate func ActionSegmentPressed(numOfDays: Days) {
 //        self.spinnerIndicator.startAnimating()
@@ -100,24 +104,26 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articleViewModel.numberOfArticles
+        return viewModel.articles.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell", for: indexPath) as! MainArticlesCell
-            if let viewModel = articleViewModel.viewModelForArticle(at: indexPath.row) {
-                cell.configureUi(articleList: viewModel)
-            }
-            return cell
-        }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let articale = viewModel.articales?[indexPath.row] else { return  }
+        let cell = tableview.dequeueReusableCell(withIdentifier: "MainArticlesCell", for: indexPath) as! MainArticlesCell
+
 //
-//        let detailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
-//        detailController.articleDetails = articale
-//        self.navigationController?.present(detailController, animated: true)//pushViewController(detailController, animated: true)
-//    }
+//        if let viewModel = viewModel.viewModelForArticle(at: indexPath.row) {
+//            cell.configureUi(article: Article)
+//        }
+        return cell
+    }
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        guard let articale = viewModel.articales?[indexPath.row] else { return  }
+    //
+    //        let detailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+    //        detailController.articleDetails = articale
+    //        self.navigationController?.present(detailController, animated: true)//pushViewController(detailController, animated: true)
+    //    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if self.tableview.isDragging {
