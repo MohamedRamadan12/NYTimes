@@ -6,8 +6,10 @@ target 'NYTimes' do
   use_frameworks!
 
   # Pods for NYTimes
-   pod 'Alamofire'
-
+ pod 'Alamofire'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+   
   target 'NYTimesTests' do
     inherit! :search_paths
     # Pods for testing

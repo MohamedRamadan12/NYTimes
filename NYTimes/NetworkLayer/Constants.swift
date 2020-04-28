@@ -21,4 +21,13 @@ enum Days: Int {
     var day : Int {
            return rawValue
        }
+    
+    public init?(index: Int) {
+           switch index {
+           case 0: self = .one
+           case 1: self = .seven
+           case 2: self = .thirty
+           default: return nil
+           }
+}
 }
