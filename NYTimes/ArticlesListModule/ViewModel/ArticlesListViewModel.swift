@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleViewModel{
+class ArticlesListViewModel{
     var Articales : [ArticlesList]?
     func callApi(numberOfDayes: Days) {
         ClientApi.getArticlesList(numOfDays: numberOfDayes) { [weak self ] (results) in
