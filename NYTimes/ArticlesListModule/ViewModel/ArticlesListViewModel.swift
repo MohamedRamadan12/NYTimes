@@ -12,18 +12,22 @@ import RxCocoa
 
 class ArticleViewModel {
     private let disposeBag = DisposeBag()
-
+    
     let articles = BehaviorRelay<[ArticlesList]>(value: [])
     let numberOfDays = BehaviorRelay<Days>(value: Days.one)
 
-    let fetchArticles = PublishSubject<Void>()
+    let fetchArticles = PublishSubject<String>()
+    
+    func setupAction() {
+        
+        ClientApi.getArticlesList(numOfDays: self.numberOfDays.value) { [weak self ] (results) in
+                       self?.articles.accept(results)
+        }
+        _ = fetchArticles.asObserver().map({ _ in
+            })
+    }
 
     init() {
-
-        _ = fetchArticles.map {_ in
-            ClientApi.getArticlesList(numOfDays: self.numberOfDays.value) { [weak self ] (results) in
-                self?.articles.accept(results)
-            }
-        }
+       setupAction()
     }
 }
