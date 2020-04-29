@@ -18,13 +18,28 @@ class ArticleViewModel {
 
     let fetchArticles = PublishSubject<Void>()
     
-    func setupAction() {
-        
-        ClientApi.getArticlesList(numOfDays: self.numberOfDays.value) { [weak self ] (results) in
-                       self?.articles.accept(results)
+    func getDays(selectedIndex: Int)->Days {
+        switch selectedIndex {
+        case 0:
+            return .one
+        case 1:
+            return .seven
+        case 2:
+            return .thirty
+            
+        default:
+            return .one
         }
-        _ = fetchArticles.asObserver().map({ _ in
-            })
+    }
+    
+    func setupAction() {
+        fetchArticles.subscribe({_ in
+            ClientApi.getArticlesList(numOfDays: self.numberOfDays.value) { [weak self ] (results) in
+                           self?.articles.accept(results)
+            }
+            }).disposed(by: disposeBag)
+        
+        
     }
 
     init() {
