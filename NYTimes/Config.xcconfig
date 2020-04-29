@@ -11,3 +11,6 @@
 
 BaseUrl=api.nytimes.com/svc/mostpopular/v2/viewed/
 ApiKey=.json?api-key=XxCxgOxWhL6WVwdaJ5zNSYpYunISHuOB
+
+#include "Pods/Target Support Files/Pods-NYTimes/Pods-NYTimes.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-NYTimes/Pods-NYTimes.release.xcconfig"
