@@ -52,10 +52,10 @@ class ArticlesViewModelTest: XCTestCase {
     }
     
     func testNumOfdays(){
-        let selectedDayOsbservable = viewModel.numberOfDays.asObservable().subscribeOn(scheduler)
-        viewModel.numberOfDays.accept(.one)
-        let result = viewModel.getDays(selectedIndex: 0)
-        XCTAssertEqual(result , try selectedDayOsbservable.asObservable().toBlocking().first())
+//        let selectedDayOsbservable = viewModel.numberOfDays.asObservable().subscribeOn(scheduler)
+        viewModel.numberOfDays.accept(.seven)
+        let result = viewModel.getDays(selectedIndex: 1)
+        XCTAssertEqual(try viewModel.numberOfDays.toBlocking(timeout: 2).first(), result)
     }
     
     func testFilter() {
