@@ -16,7 +16,7 @@ class ArticleViewModel {
     let articles = BehaviorRelay<[ArticlesList]>(value: [])
     let numberOfDays = BehaviorRelay<Days>(value: Days.one)
 
-    let fetchArticles = PublishSubject<String>()
+    let fetchArticles = PublishSubject<Void>()
     
     func setupAction() {
         

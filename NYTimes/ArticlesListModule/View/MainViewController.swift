@@ -18,7 +18,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var spinnerIndicator: UIActivityIndicatorView!
     
     let disposeBag = DisposeBag()
-    var viewModel: ArticleViewModel = ArticleViewModel()
+    var viewModel : ArticleViewModel = ArticleViewModel()
+    var detailViewModel : ArticlesViewModel!
 
     let refresherControl = UIRefreshControl()
     
@@ -70,9 +71,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
         tableview.refreshControl = refresherControl
         refresherControl.tintColor = #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1)
         refresherControl.attributedTitle = NSAttributedString(string: "Refreshing News", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1), NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!])
-//        refresherControl.rx.controlEvent(.valueChanged).bind(to: viewModel.fetchArticles).disposed(by: disposeBag)
-        refresherControl.addTarget(self, action: #selector(callData), for: .valueChanged)
-    }
+        refresherControl.rx.controlEvent(.valueChanged).bind(to: viewModel.fetchArticles).disposed(by: disposeBag)
+        }
     
     private func setupTableView() {
         tableview.rowHeight = UITableView.automaticDimension
@@ -82,9 +82,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     
     private func bindToTableView(){
         viewModel.articles.bind(to: tableview.rx.items(cellIdentifier: "MainArticlesCell", cellType: MainArticlesCell.self)) { (row, articleElement, cell) in
-//            cell.articleLable.text = articleElement.adxKeywords
-//            cell.titleLable.text = articleElement.title
-            cell.configureUi(articleList: articleElement)
+            cell.configureUi(articleList: ArticlesViewModel(article: articleElement))
         }.disposed(by: disposeBag)
     }
     
