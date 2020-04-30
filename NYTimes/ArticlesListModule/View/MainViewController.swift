@@ -92,6 +92,13 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
         viewModel.articles.bind(to: tableview.rx.items(cellIdentifier: "MainArticlesCell", cellType: MainArticlesCell.self)) { (row, articleElement, cell) in
             cell.configureUi(articleList: ArticlesViewModel(article: articleElement))
         }.disposed(by: disposeBag)
+        
+        tableview.rx.modelSelected(ArticlesList.self)
+        .subscribe(onNext: { value in
+            guard let detailsVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return  }
+            detailsVC.articleDetails = value
+            self.navigationController?.present(detailsVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
     }
     
 }
