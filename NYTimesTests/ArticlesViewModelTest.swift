@@ -31,25 +31,7 @@ class ArticlesViewModelTest: XCTestCase {
         }
          super.tearDown()
     }
-    func testAmb() {
-      // 2
-    let observer = scheduler.createObserver(String.self)
-        let observableA = scheduler.createHotObservable([ // 2
-        Recorded.next(100, "a"), Recorded.next(200, "b"), Recorded.next(300, "c")
-        ])
-        let observableB = scheduler.createHotObservable([ // 4
-        Recorded.next(90, "1"), Recorded.next(200, "2"), Recorded.next(300, "3")
-        ])
-        let ambObservable = observableA.amb(observableB)
-        self.subscribtion = ambObservable.subscribe(observer)
-        scheduler.start()
-        let results = observer.events.compactMap {
-        $0.value.element
-        }
-        XCTAssertEqual(results, ["1", "2", "3"])
-//        XCTAssertEqual(results, ["1", "2", "No you didn't!"])
-
-    }
+    
     
     func testNumOfdays(){
 //        let selectedDayOsbservable = viewModel.numberOfDays.asObservable().subscribeOn(scheduler)
@@ -58,50 +40,6 @@ class ArticlesViewModelTest: XCTestCase {
         XCTAssertEqual(try viewModel.numberOfDays.toBlocking(timeout: 2).first(), result)
     }
     
-    func testFilter() {
-      // 1
-    let observer = scheduler.createObserver(Int.self)
-    // 2
-    let observable = scheduler.createHotObservable([ Recorded.next(100, 1),
-    Recorded.next(200, 2),
-    Recorded.next(300, 3),
-    Recorded.next(400, 2),
-    Recorded.next(500, 1) ])
-    // 3
-    let filterObservable = observable.filter {
-    $0 < 3 }
-    // 4
-    scheduler.scheduleAt(0) {
-    self.subscribtion = filterObservable.subscribe(observer) }
-    // 5
-    scheduler.start()
-    // 6
-    let results = observer.events.compactMap {
-    $0.value.element }
-    // 7
-      XCTAssertEqual(results, [1, 2, 2, 1])
-    }
-    
-    func testToArray() throws {
-      // 1
-    let scheduler = ConcurrentDispatchQueueScheduler(qos: .default) // 2
-    let toArrayObservable = Observable.of(1, 2).subscribeOn(scheduler)
-    // 3
-    XCTAssertEqual(try toArrayObservable.toBlocking().toArray(), [1, 2])
-        
-    }
-    
-    func testToArrayMaterialized() {
-      // 1
-    let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
-    let toArrayObservable = Observable.of(1, 2).subscribeOn(scheduler)
-    // 2
-    let result = toArrayObservable .toBlocking()
-    .materialize()
-    // 3
-    switch result {
-    case .completed(let elements):
-    XCTAssertEqual(elements, [1, 2]) case .failed(_, let error):
-    XCTFail(error.localizedDescription) }
-    }
+
+  
 }
