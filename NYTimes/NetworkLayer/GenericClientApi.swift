@@ -17,8 +17,7 @@ class GenericClientApi {
         
         return AF.request(route).responseJSON(completionHandler: { (response) in
             switch response.result {
-                case .success(let value):
-                    print(value)
+                case .success( _):
                     do {
                         let DataResponsed = try JSONDecoder().decode(T.self, from: response.data!)
                         completion(DataResponsed, nil, response.response?.statusCode)

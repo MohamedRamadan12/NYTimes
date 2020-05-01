@@ -14,20 +14,12 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
     
-    var articleDetails: ArticlesList?
-    
-    
+    var article: Article?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupUI(articleDetails: articleDetails!)
+        self.detailsLabel.text = article?.adxKeywords
+        self.titleLabel.text = article?.title
     }
-    
- 
-    func setupUI(articleDetails: ArticlesList){
-        self.detailsLabel.text = articleDetails.adxKeywords
-        self.titleLabel.text = articleDetails.title
-    }
-  
-
 }

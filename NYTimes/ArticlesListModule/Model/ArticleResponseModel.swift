@@ -9,7 +9,7 @@ import Foundation
 struct Articles: Codable {
     let status, copyright: String
     let numResults: Int
-    let results: [ArticlesList]
+    let results: [Article]
 
     enum CodingKeys: String, CodingKey {
         case status, copyright
@@ -19,14 +19,13 @@ struct Articles: Codable {
 }
 
 // MARK: - Result
-struct ArticlesList: Codable {
+struct Article: Codable {
     let uri: String
     let url: String
     let id, assetID: Int
     let source: Source
     let publishedDate, updated, section, subsection: String
     let nytdsection, adxKeywords: String
-    let column: JSONNull?
     let byline: String
     let type: ResultType
     let title, abstract: String
@@ -41,7 +40,7 @@ struct ArticlesList: Codable {
         case publishedDate = "published_date"
         case updated, section, subsection, nytdsection
         case adxKeywords = "adx_keywords"
-        case column, byline, type, title, abstract
+        case byline, type, title, abstract
         case desFacet = "des_facet"
         case orgFacet = "org_facet"
         case perFacet = "per_facet"
@@ -95,32 +94,5 @@ enum Source: String, Codable {
 enum ResultType: String, Codable {
     case article = "Article"
     case interactive = "Interactive"
-}
-
-// MARK: - Encode/decode helpers
-
-class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-
-    public var hashValue: Int {
-        return 0
-    }
-
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
-    }
 }
 

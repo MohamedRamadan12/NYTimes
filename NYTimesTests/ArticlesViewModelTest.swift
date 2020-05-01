@@ -13,32 +13,40 @@ import RxBlocking
 
 @testable import NYTimes
 
+class TestClientAPI: ClientAPIType {
+    var numberOfCalls = 0
+    func getArticlesList(numOfDays: Days, completion: @escaping ([Article]) -> Void) {
+        numberOfCalls += 1
+        completion([])
+    }
+}
+
 class ArticlesViewModelTest: XCTestCase {
 
-    var scheduler: TestScheduler!
-    var subscribtion: Disposable!
     var viewModel: ArticleViewModel!
+    let apiClient = TestClientAPI()
     
     override func setUp() {
         super.setUp()
-        viewModel = ArticleViewModel()
-        scheduler = TestScheduler(initialClock: 0)
+        viewModel = ArticleViewModel(clientAPI: apiClient)
     }
 
     override func tearDown() {
-        scheduler.scheduleAt(1000) {
-            self.subscribtion.dispose()
-        }
          super.tearDown()
     }
-    
-    
-    func testNumOfdays(){
-//        let selectedDayOsbservable = viewModel.numberOfDays.asObservable().subscribeOn(scheduler)
-        viewModel.numberOfDays.accept(.seven)
-        let result = viewModel.getDays(selectedIndex: 1)
-        XCTAssertEqual(try viewModel.numberOfDays.toBlocking(timeout: 2).first(), result)
+
+    func testInit() {
+        XCTAssertEqual(1, apiClient.numberOfCalls)
     }
+    
+    
+    func testRefreshing() {
+        viewModel.shouldRefresh.publish()
+        try! viewModel.articles.toBlocking().last()
+//        try! viewModel.articles.toBlocking().first()
+        XCTAssertEqual(2, apiClient.numberOfCalls)
+    }
+
     
 
   

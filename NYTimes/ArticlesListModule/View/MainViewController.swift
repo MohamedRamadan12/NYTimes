@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxBiBinding
 
 class MainViewController: UIViewController,UIScrollViewDelegate {
     
@@ -18,16 +19,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var spinnerIndicator: UIActivityIndicatorView!
     
     let disposeBag = DisposeBag()
-    var viewModel : ArticleViewModel = ArticleViewModel()
+    var viewModel : ArticleViewModel = ArticleViewModel(clientAPI: ClientAPI())
     var detailViewModel : ArticlesViewModel!
     
     let refresherControl = UIRefreshControl()
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
         self.title = "NY Times"
         self.navigationController?.isNavigationBarHidden = false
-        super.viewWillAppear(true)
         self.navigationController?.navigationBar.prefersLargeTitles = true
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -38,67 +38,48 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableview.delegate = nil
-        self.tableview.dataSource = nil
-        self.spinnerIndicator.startAnimating()
+
+        self.setupTableView()
         self.bindViewModel()
-        refreshTable()
-        setupTableView()
+
         bindToTableView()
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tableview.reloadData()
     }
     
     func bindViewModel() {
-    
-        segmentedControl.rx.selectedSegmentIndex.subscribe(onNext: { (days) in
-            self.viewModel.numberOfDays.accept(self.viewModel.getDays(selectedIndex: days))
-            self.viewModel.fetchArticles.asObserver().onNext(()).self
-            self.tableview.reloadData()
-        }).disposed(by: disposeBag)
-        self.refresherControl.endRefreshing()
-        self.spinnerIndicator.stopAnimating()
-        
+        (segmentedControl.rx.value <-> viewModel.days).disposed(by: disposeBag)
+        refresherControl.rx.controlEvent(.valueChanged).bind(to: viewModel.shouldRefresh).disposed(by: disposeBag)
+        viewModel.isRefreshing.bind(to: refresherControl.rx.isRefreshing, spinnerIndicator.rx.isAnimating).disposed(by: disposeBag)
+        viewModel.articles
+        .bind(to: tableview.rx.items(cellIdentifier: "MainArticlesCell", cellType: MainArticlesCell.self)) { (row, article, cell) in
+            cell.configureUi(article: ArticlesViewModel(article: article))
+        }.disposed(by: viewModel.disposeBag)
+
     }
     
-    func refreshTable() {
-        
-        tableview.refreshControl = refresherControl
+    func setupTableView() {
         refresherControl.tintColor = #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1)
-        refresherControl.attributedTitle = NSAttributedString(string: "Refreshing News", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1), NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!])
-        
-        self.refresherControl.endRefreshing()
-        
-        self.refresherControl.rx.controlEvent(.valueChanged).subscribe(onNext: { (_) in
-            self.viewModel.fetchArticles.asObserver().onNext(())
-            self.refresherControl.endRefreshing()
-        }).disposed(by:disposeBag)
-    }
-    
-    private func setupTableView() {
-        
+        refresherControl.attributedTitle = NSAttributedString(string: "Refreshing News", attributes: [
+            NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2784313725, green: 0.462745098, blue: 0.9019607843, alpha: 1),
+            NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!
+        ])
+
+        tableview.refreshControl = refresherControl
+        tableview.delegate = nil
+        tableview.dataSource = nil
         tableview.rowHeight = UITableView.automaticDimension
         tableview.estimatedRowHeight = 120
         tableview.register(UINib(nibName: "MainArticlesCell", bundle: nil), forCellReuseIdentifier: "MainArticlesCell")
+
     }
     
-    private func bindToTableView(){
+    private func bindToTableView() {
         
-        viewModel.articles.bind(to: tableview.rx.items(cellIdentifier: "MainArticlesCell", cellType: MainArticlesCell.self)) { (row, articleElement, cell) in
-            cell.configureUi(articleList: ArticlesViewModel(article: articleElement))
-        }.disposed(by: disposeBag)
-        
-        tableview.rx.modelSelected(ArticlesList.self)
-        .subscribe(onNext: { value in
-            guard let detailsVC = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return  }
-            detailsVC.articleDetails = value
-            self.navigationController?.present(detailsVC, animated: true, completion: nil)
-        }).disposed(by: disposeBag)
+        tableview.rx.modelSelected(Article.self)
+            .subscribe(onNext: { value in
+                guard let viewController = self.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return  }
+                viewController.article = value
+                self.navigationController?.present(viewController, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
     }
     
 }
