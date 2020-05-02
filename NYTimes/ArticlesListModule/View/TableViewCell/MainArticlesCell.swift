@@ -19,7 +19,17 @@ class MainArticlesCell: UITableViewCell {
     
     func configureUi(article: Article) {
         titleLable.text = article.title
-        articleLable.text = article.abstract
+        let articlee = article.abstract
+        let nsString = articlee as NSString
+        if nsString.length >= 10
+                {
+                 // making description of only 20 characters with (click to continue) sentence
+                    let customLength = "\(nsString.substring(with: NSRange(location: 0, length: nsString.length > 20 ? 20 : nsString.length)))"
+                    let continueTxt = "... click to continue"
+                    articleLable.text = customLength + continueTxt
+            }
     }
     
 }
+
+
