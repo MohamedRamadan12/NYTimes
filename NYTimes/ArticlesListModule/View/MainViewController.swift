@@ -20,7 +20,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     
     let disposeBag = DisposeBag()
     var viewModel : ArticleViewModel = ArticleViewModel(clientAPI: ClientAPI())
-    var detailViewModel : ArticlesViewModel!
+//    var detailViewModel : ArticlesViewModel!
     
     let refresherControl = UIRefreshControl()
     
@@ -51,7 +51,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
         viewModel.isRefreshing.bind(to: refresherControl.rx.isRefreshing, spinnerIndicator.rx.isAnimating).disposed(by: disposeBag)
         viewModel.articles
         .bind(to: tableview.rx.items(cellIdentifier: "MainArticlesCell", cellType: MainArticlesCell.self)) { (row, article, cell) in
-            cell.configureUi(article: ArticlesViewModel(article: article))
+            cell.configureUi(article: article)
         }.disposed(by: viewModel.disposeBag)
 
     }

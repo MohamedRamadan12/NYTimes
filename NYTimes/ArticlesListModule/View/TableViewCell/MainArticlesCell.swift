@@ -17,9 +17,9 @@ class MainArticlesCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configureUi(article: ArticlesViewModel) {
+    func configureUi(article: Article) {
         titleLable.text = article.title
-        articleLable.text = article.detail
+        articleLable.text = article.abstract
     }
     
 }
