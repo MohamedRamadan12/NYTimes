@@ -5,6 +5,12 @@
 
 import Foundation
 
+
+protocol ArticleDataShowed {
+    var title: String { get }
+    var abstract: String { get }
+}
+
 // MARK: - Articles
 struct Articles: Codable {
     let status, copyright: String
@@ -19,7 +25,7 @@ struct Articles: Codable {
 }
 
 // MARK: - Result
-struct Article: Codable {
+struct Article: Codable, ArticleDataShowed {
     let uri: String
     let url: String
     let id, assetID: Int

@@ -17,7 +17,7 @@ class MainArticlesCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configureUi(article: Article) {
+    func configureUi(article: ArticleDataShowed) {
         titleLable.text = article.title
         let articlee = article.abstract
         let nsString = articlee as NSString
